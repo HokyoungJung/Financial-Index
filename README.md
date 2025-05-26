@@ -1,148 +1,157 @@
-# Market-Cap-Weighted Indices (Stocks, Crypto, Commodities)
+# 📈 Market-Cap Weighted Indices
 
-This project provides an automated, daily-updated calculation of market-cap-weighted indices for three asset classes:
+This project provides an automated calculation and visualization of market-cap-weighted indices and total return indices for three asset classes:
 
-* **Stocks**: NASDAQ-100
-* **Cryptocurrencies**: Top 20 cryptocurrencies by market capitalization
-* **Commodities**: Top 10 commodity futures (equal-weighted, fixed list)
+* **Stocks**: NASDAQ-100 (Market Cap Weighted)
+* **Cryptocurrencies**: Top 20 cryptocurrencies by market capitalization (Market Cap Weighted)
+* **Commodities**: Top 10 commodity futures (Equal Weighted)
 
-The indices are calculated on a daily basis with monthly rebalancing, reflecting realistic market practices.
+Indices are computed **daily** with **monthly rebalancing**, reflecting realistic and professional financial analysis practices. The script also calculates and visualizes cumulative return indices, enabling easy comparisons between rebalanced and buy-and-hold strategies.
 
 ---
 
 ## 📌 Project Overview
 
-* **Time Period**: January 1, 2019, to today (automatically updates)
+* **Time Period**: January 1, 2019, to the present (automatically updated)
 * **Data Sources**:
 
-  * Stocks and commodities: [Yahoo Finance](https://finance.yahoo.com/)
+  * Stocks and Commodities: [Yahoo Finance](https://finance.yahoo.com/)
   * Cryptocurrencies: [CoinGecko API](https://www.coingecko.com/api/documentation)
-* **Calculation Methodology**:
+* **Index Calculation**:
 
-  * Daily index calculation (accurate daily tracking)
-  * Monthly rebalancing (reflecting real-world practices)
+  * **Price Index**: Daily returns calculated with monthly rebalancing.
+  * **Total Return Index**: Daily cumulative returns calculated from initial portfolio weights without rebalancing.
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quick Start Guide
 
-### 1. **Setup Environment**
+### Step 1: **Set Up the Environment**
 
 ```bash
 pip install yfinance pandas numpy matplotlib pycoingecko
 ```
 
-### 2. **Run the Python Script**
+### Step 2: **Run the Script**
 
 ```bash
 python index_maker.py
 ```
 
-After execution, you will see plotted indices for:
+Upon completion, the script will:
 
-* NASDAQ-100 stocks (Market Cap Weighted)
-* Top 20 cryptocurrencies (Market Cap Weighted)
-* Top 10 commodities (Equal Weighted)
+* Generate clear visual plots comparing Price Indices and Return Indices for:
 
-The script will also display the total execution time.
+  * NASDAQ-100 stocks
+  * Top 20 cryptocurrencies
+  * Top 10 commodities
+* Print the total execution time (usually **1–3 minutes**).
 
 ---
 
 ## ⚙️ How the Script Works
 
-### Automatic Asset Pool Updates:
+### Automatic Asset Selection
 
 * **Stocks**: Retrieves NASDAQ-100 tickers automatically from Wikipedia.
-* **Cryptocurrencies**: Fetches the top 20 cryptocurrencies by market cap using CoinGecko API.
-* **Commodities**: Uses a fixed pool of the top 10 most liquid commodity futures from Yahoo Finance.
+* **Cryptocurrencies**: Fetches top 20 cryptocurrencies by market capitalization from CoinGecko.
+* **Commodities**: Uses a fixed list of popular commodity futures from Yahoo Finance.
 
-### Daily Data Collection:
+### Daily Data Collection
 
-* Downloads daily adjusted closing prices for each asset from Yahoo Finance.
+* Automatically downloads adjusted daily closing prices for each asset.
 
-### Initial Market Cap and Units Setup:
+### Initial Portfolio Setup
 
-* **Stocks**: Obtains shares outstanding to calculate market caps.
-* **Cryptocurrencies**: Uses CoinGecko API to fetch current market caps for initial unit calculation.
-* **Commodities**: Sets an equal initial investment (\$100 each).
+* **Stocks**: Calculates initial market caps based on outstanding shares.
+* **Cryptocurrencies**: Retrieves market caps via CoinGecko API for accurate weighting.
+* **Commodities**: Allocates equal initial investment (\$100 per commodity).
 
-### Index Calculation:
+### Index Calculation Methodology
 
-* Daily index calculation with returns computed each trading day.
-* Rebalances indices weights only at the end of each month.
+* **Daily Price Index**:
+
+  * Reflects daily market-price movements with monthly rebalancing.
+* **Total Return Index**:
+
+  * Computes cumulative daily returns, reflecting a buy-and-hold strategy without rebalancing.
 
 ---
 
-## 🛠 Manual Adjustments of Tickers
+## 🔧 Customizing Asset Pools
 
-If you wish to manually adjust the tickers for each asset class, you can easily modify the lists in the script:
+You can manually adjust the tickers for each asset class directly in the script (`index_maker.py`):
 
-* **Stocks** (NASDAQ-100):
+* **Stocks (NASDAQ-100)**:
 
-  ```python
-  # Modify the NASDAQ-100 tickers manually if needed
-  stock_pool = ["AAPL", "MSFT", "AMZN", ...]
-  ```
+```python
+# Example modification
+stock_pool = ["AAPL", "MSFT", "AMZN", "..."]
+```
 
 * **Cryptocurrencies**:
 
-  ```python
-  # Manually set your preferred cryptocurrencies
-  crypto_pool = ["BTC-USD", "ETH-USD", "BNB-USD", ...]
-  ```
+```python
+crypto_pool = ["BTC-USD", "ETH-USD", "BNB-USD", "..."]
+```
 
 * **Commodities**:
 
-  ```python
-  # Manually set commodity tickers
-  commodity_pool = ["GC=F", "CL=F", "SI=F", ...]
-  ```
+```python
+commodity_pool = ["GC=F", "CL=F", "SI=F", "..."]
+```
 
-Simply replace the existing ticker lists with your desired selections.
-
----
-
-## 🚨 Common Issues and Troubleshooting
-
-* **Execution Time**:
-  Running the script for the first time may take several minutes due to data downloading. Subsequent runs will be faster.
-
-* **Ticker Changes**:
-  Yahoo Finance occasionally updates ticker symbols. If you encounter errors or missing data, verify ticker symbols on Yahoo Finance.
-
-* **CoinGecko API Limitations**:
-  Free CoinGecko API usage is generally sufficient, but if you experience rate-limiting, consider requesting fewer cryptocurrencies or adding delays between API requests.
+Simply replace or update these lists with your desired assets.
 
 ---
 
-## 📊 Output and Visualization
+## 🚨 Troubleshooting Common Issues
 
-The script generates clear visual plots for each asset class index, enabling intuitive analysis of market trends.
+* **Slow Initial Run**:
 
-### Example Output:
+  * The initial execution may take several minutes due to extensive data downloading. Subsequent runs will be faster.
+* **Ticker Updates**:
 
-* NASDAQ-100 Market Cap Weighted Index (blue)
-* Cryptocurrencies Top 20 Market Cap Index (purple)
-* Commodities Top 10 Equal-Weighted Index (green)
+  * Occasionally, Yahoo Finance updates ticker symbols. Verify ticker symbols on [Yahoo Finance](https://finance.yahoo.com/) if data issues occur.
+* **CoinGecko API Limits**:
+
+  * If you encounter API limits, consider reducing the number of cryptocurrencies or adding delays between requests.
 
 ---
 
-## ⏱ Performance
+## 📊 Visualization and Interpretation
 
-The total execution time of the script is displayed upon completion. Typically, the execution time ranges from **1 to 3 minutes**, depending on your internet speed and computing power.
+The script generates intuitive visual plots:
+
+* **Solid lines**: Price Indices (Monthly Rebalancing)
+* **Dashed lines**: Total Return Indices (No Rebalancing)
+
+These visualizations help illustrate the performance differences between active rebalancing strategies and passive investment approaches.
+
+---
+
+## ⏱ Performance & Execution Time
+
+The script measures and displays its total execution time upon completion, typically ranging from **1–3 minutes**.
 
 Example:
 
 ```
-Total Execution Time: 128.45 seconds
+Total Execution Time: 57.73 seconds
 ```
 
 ---
 
 ## 📜 License
 
-This project is provided under the MIT License. You are free to modify, distribute, and use this script in your own projects with attribution.
+This project is distributed under the **MIT License**. You are free to modify, distribute, and reuse the code with proper attribution.
 
 ---
 
-**Enjoy analyzing your custom market-cap-weighted indices!**
+## 🙌 Contributions
+
+Improvements and contributions are welcome! Feel free to open issues or submit pull requests directly through GitHub.
+
+---
+
+**Happy analyzing and investing!** 📊🚀
