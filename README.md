@@ -1,4 +1,4 @@
-# 📈 Market-Cap-Weighted Indices (Stocks, Cryptocurrencies, Commodities)
+# 📈 Market-Cap-Weighted-Indices (Stocks, Cryptocurrencies, Commodities)
 
 This repository provides an automated calculation and intuitive visualization of market-cap-weighted financial indices for three major asset classes:
 
