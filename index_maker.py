@@ -54,10 +54,10 @@ def download_daily_data(tickers, batch_size=10, timeout=30, retry=5):
                     timeout=timeout
                 )['Close']
                 all_data.append(data)
-                break  # 성공 시 루프 종료
+                break
             except Exception as e:
                 print(f"Retrying batch {batch}, attempt {attempt+1}/{retry} due to error: {e}")
-                time.sleep(2)  # 2초 대기 후 재시도
+                time.sleep(2)
         else:
             print(f"Failed to download batch {batch} after {retry} attempts.")
     combined_data = pd.concat(all_data, axis=1)
@@ -127,7 +127,7 @@ crypto_index = compute_daily_weighted_price_index(crypto_daily, crypto_units)
 commod_index = compute_daily_weighted_price_index(commod_daily, commod_units)
 
 # -----------------------------
-# 5. Return Indices (초기비중 고정 방식 유지)
+# 5. Return Indices
 # -----------------------------
 
 def compute_return_index(prices_df, units):
@@ -143,7 +143,7 @@ crypto_return_index = compute_return_index(crypto_daily, crypto_units)
 commod_return_index = compute_return_index(commod_daily, commod_units)
 
 # -----------------------------
-# 6. Visualization (Plot에 날짜와 최종 값 명시)
+# 6. Visualization
 # -----------------------------
 
 def plot_indices(price_idx, return_idx, title, color_price, color_return):
