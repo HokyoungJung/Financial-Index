@@ -78,21 +78,19 @@ crypto_units = {c: crypto_caps[c]/crypto_daily.iloc[0][c] for c in crypto_daily.
 commod_units = {c: 100/commod_daily.iloc[0][c] for c in commod_daily.columns}
 
 # -----------------------------
-# 4. Daily Index Calculation with Monthly Rebalancing
+# 4. Daily Price Index with Monthly Rebalancing
 # -----------------------------
 
 def compute_index_daily_monthly_rebal(prices_df, units):
     idx_values = [1000.0]
     dates = [prices_df.index[0]]
 
-    # Initial weights based on market value
     current_weights = (prices_df.iloc[0] * pd.Series(units))
     current_weights /= current_weights.sum()
 
     prev_prices = prices_df.iloc[0]
 
     for current_date, current_prices in prices_df.iloc[1:].iterrows():
-        # Calculate daily returns
         daily_return = (current_prices / prev_prices).fillna(1.0)
         daily_index_return = (current_weights * daily_return).sum()
 
@@ -100,7 +98,6 @@ def compute_index_daily_monthly_rebal(prices_df, units):
         idx_values.append(new_index)
         dates.append(current_date)
 
-        # Check if it is month-end for rebalancing
         if current_date == (current_date + pd.tseries.offsets.MonthEnd(0)):
             current_weights = (current_prices * pd.Series(units))
             current_weights /= current_weights.sum()
@@ -109,31 +106,48 @@ def compute_index_daily_monthly_rebal(prices_df, units):
 
     return pd.Series(idx_values, index=dates)
 
-# Calculate indices
 stock_index = compute_index_daily_monthly_rebal(stock_daily, stock_shares)
 crypto_index = compute_index_daily_monthly_rebal(crypto_daily, crypto_units)
 commod_index = compute_index_daily_monthly_rebal(commod_daily, commod_units)
 
 # -----------------------------
-# 5. Visualize Indices
+# 5. Calculate Return Indices (No Rebalancing, cumulative returns)
 # -----------------------------
 
-def plot_index(series, title, color):
+def compute_return_index(prices_df, units):
+    returns = prices_df.pct_change().fillna(0)
+    weights = (prices_df.iloc[0] * pd.Series(units))
+    weights /= weights.sum()
+    weighted_returns = returns.dot(weights)
+    return_index = (1 + weighted_returns).cumprod() * 1000
+    return return_index
+
+stock_return_index = compute_return_index(stock_daily, stock_shares)
+crypto_return_index = compute_return_index(crypto_daily, crypto_units)
+commod_return_index = compute_return_index(commod_daily, commod_units)
+
+# -----------------------------
+# 6. Visualize Both Indices
+# -----------------------------
+
+def plot_indices(price_idx, return_idx, title, color_price, color_return):
     plt.figure(figsize=(12,6))
-    plt.plot(series, linewidth=2, color=color)
+    plt.plot(price_idx, linewidth=2, color=color_price, label='Price Index (Monthly Rebalancing)')
+    plt.plot(return_idx, linewidth=2, color=color_return, linestyle='--', label='Return Index (No Rebalancing)')
     plt.title(title, fontsize=16)
     plt.xlabel('Year', fontsize=14)
     plt.ylabel('Index Value', fontsize=14)
     plt.grid(True, linestyle='--', alpha=0.7)
+    plt.legend()
     plt.tight_layout()
     plt.show()
 
-plot_index(stock_index, 'NASDAQ-100 Market Cap Index (Daily, Monthly Rebalancing)', 'blue')
-plot_index(crypto_index, 'Top 20 Cryptocurrencies Market Cap Index (Daily, Monthly Rebalancing)', 'purple')
-plot_index(commod_index, 'Top 10 Commodities Equal-Weighted Index (Daily, Monthly Rebalancing)', 'green')
+plot_indices(stock_index, stock_return_index, 'NASDAQ-100 Index Comparison', 'blue', 'skyblue')
+plot_indices(crypto_index, crypto_return_index, 'Top 20 Cryptocurrencies Index Comparison', 'purple', 'orchid')
+plot_indices(commod_index, commod_return_index, 'Top 10 Commodities Index Comparison', 'green', 'lightgreen')
 
 # -----------------------------
-# 6. Display total execution time
+# 7. Display total execution time
 # -----------------------------
 
 end_time = time.time()
