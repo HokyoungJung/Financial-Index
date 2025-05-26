@@ -1,32 +1,34 @@
-# 📈 Market-Cap-Weighted Indices (Stocks, Crypto, Commodities)
+# 📈 Market-Cap-Weighted Indices (Stocks, Cryptocurrencies, Commodities)
 
-This project provides an automated calculation and visualization of market-cap-weighted indices and total return indices for three asset classes:
+This repository provides an automated calculation and intuitive visualization of market-cap-weighted financial indices for three major asset classes:
 
-* **Stocks**: NASDAQ-100 (Market Cap Weighted)
-* **Cryptocurrencies**: Top 20 cryptocurrencies by market capitalization (Market Cap Weighted)
-* **Commodities**: Top 10 commodity futures (Equal Weighted)
+* **Stocks**: NASDAQ-100 (**Daily Market-Cap-Weighted**)
+* **Cryptocurrencies**: Top 20 cryptocurrencies by market capitalization (**Daily Market-Cap-Weighted**)
+* **Commodities**: Top 10 commodity futures (**Equal-Weighted**)
 
-Indices are computed **daily** with **monthly rebalancing**, reflecting realistic and professional financial analysis practices. The script also calculates and visualizes cumulative return indices, enabling easy comparisons between rebalanced and buy-and-hold strategies.
+Indices are computed daily, reflecting market growth accurately through a daily market-cap weighting. Additionally, the script calculates a **Total Return Index** based on initial portfolio weights (buy-and-hold strategy), allowing for an insightful comparison between dynamic market growth and passive investment returns.
 
 ---
 
 ## 📌 Project Overview
 
-* **Time Period**: January 1, 2019, to the present (automatically updated)
+* **Analysis Period**: January 1, 2019, to present (automatically updated daily)
 * **Data Sources**:
 
-  * Stocks and Commodities: [Yahoo Finance](https://finance.yahoo.com/)
-  * Cryptocurrencies: [CoinGecko API](https://www.coingecko.com/api/documentation)
-* **Index Calculation**:
+  * **Stocks & Commodities**: [Yahoo Finance](https://finance.yahoo.com/)
+  * **Cryptocurrencies**: [CoinGecko API](https://www.coingecko.com/api/documentation)
+* **Indices Computed**:
 
-  * **Price Index**: Daily returns calculated with monthly rebalancing.
-  * **Total Return Index**: Daily cumulative returns calculated from initial portfolio weights without rebalancing.
+  * **Price Index (Daily Market-Cap-Weighted)**: Reflects daily market-price movements with daily re-weighting based on market capitalization.
+  * **Total Return Index (Initial Weight, No Rebalancing)**: Cumulative returns calculated based on initial portfolio allocations, representing a buy-and-hold strategy.
 
 ---
 
 ## 🚀 Quick Start Guide
 
-### Step 1: **Set Up the Environment**
+### Step 1: **Environment Setup**
+
+Install the required Python packages:
 
 ```bash
 pip install yfinance pandas numpy matplotlib pycoingecko
@@ -34,58 +36,58 @@ pip install yfinance pandas numpy matplotlib pycoingecko
 
 ### Step 2: **Run the Script**
 
+Simply run:
+
 ```bash
 python index_maker.py
 ```
 
-Upon completion, the script will:
+Upon execution, the script will:
 
-* Generate clear visual plots comparing Price Indices and Return Indices for:
+* Generate clear visual comparisons between:
 
-  * NASDAQ-100 stocks
-  * Top 20 cryptocurrencies
-  * Top 10 commodities
-* Print the total execution time (usually **1–3 minutes**).
+  * **Daily-Weighted Price Indices** and **Total Return Indices** for each asset class.
+* Clearly annotate the most recent index values and dates on each plot.
+* Display total execution time (typically between 1–3 minutes).
 
 ---
 
 ## ⚙️ How the Script Works
 
-### Automatic Asset Selection
+### ✅ **Automatic Asset Pool Selection**
 
-* **Stocks**: Retrieves NASDAQ-100 tickers automatically from Wikipedia.
-* **Cryptocurrencies**: Fetches top 20 cryptocurrencies by market capitalization from CoinGecko.
-* **Commodities**: Uses a fixed list of popular commodity futures from Yahoo Finance.
+* **Stocks**: Automatically retrieves current NASDAQ-100 tickers from Wikipedia.
+* **Cryptocurrencies**: Retrieves top 20 cryptocurrencies by current market capitalization via CoinGecko API.
+* **Commodities**: Utilizes a fixed selection of commonly traded commodity futures tickers from Yahoo Finance.
 
-### Daily Data Collection
+### ✅ **Data Collection**
 
-* Automatically downloads adjusted daily closing prices for each asset.
+* Automatically downloads adjusted daily closing prices for all selected assets using Yahoo Finance.
 
-### Initial Portfolio Setup
+### ✅ **Initial Portfolio Setup**
 
-* **Stocks**: Calculates initial market caps based on outstanding shares.
-* **Cryptocurrencies**: Retrieves market caps via CoinGecko API for accurate weighting.
-* **Commodities**: Allocates equal initial investment (\$100 per commodity).
+* **Stocks**: Calculates initial market capitalization based on outstanding shares data from Yahoo Finance.
+* **Cryptocurrencies**: Retrieves initial market caps from CoinGecko API.
+* **Commodities**: Assumes equal initial investment (\$100 per commodity).
 
-### Index Calculation Methodology
+### ✅ **Index Calculation Methodology**
 
-* **Daily Price Index**:
+* **Daily-Weighted Price Index**:
 
-  * Reflects daily market-price movements with monthly rebalancing.
+  * Reflects accurate market growth, adjusting market-cap weights every trading day.
 * **Total Return Index**:
 
-  * Computes cumulative daily returns, reflecting a buy-and-hold strategy without rebalancing.
+  * Reflects cumulative returns from initial portfolio weights without any subsequent rebalancing, suitable for evaluating passive investment strategies.
 
 ---
 
-## 🔧 Customizing Asset Pools
+## 🔧 Customizing Asset Pools (Optional)
 
-You can manually adjust the tickers for each asset class directly in the script (`index_maker.py`):
+You can manually adjust the ticker symbols for each asset class in the script (`index_maker.py`):
 
 * **Stocks (NASDAQ-100)**:
 
 ```python
-# Example modification
 stock_pool = ["AAPL", "MSFT", "AMZN", "..."]
 ```
 
@@ -101,7 +103,7 @@ crypto_pool = ["BTC-USD", "ETH-USD", "BNB-USD", "..."]
 commodity_pool = ["GC=F", "CL=F", "SI=F", "..."]
 ```
 
-Simply replace or update these lists with your desired assets.
+Simply modify these lists to customize your analysis according to your requirements.
 
 ---
 
@@ -109,43 +111,43 @@ Simply replace or update these lists with your desired assets.
 
 * **Slow Initial Run**:
 
-  * The initial execution may take several minutes due to extensive data downloading. Subsequent runs will be faster.
-* **Ticker Updates**:
+  * Initial execution may take a few minutes due to comprehensive data fetching. Subsequent runs typically complete faster.
+* **Yahoo Finance Data Download Errors**:
 
-  * Occasionally, Yahoo Finance updates ticker symbols. Verify ticker symbols on [Yahoo Finance](https://finance.yahoo.com/) if data issues occur.
-* **CoinGecko API Limits**:
+  * Occasionally Yahoo Finance servers may timeout. The script includes retry mechanisms to handle temporary connection issues.
+* **CoinGecko API Rate Limits**:
 
-  * If you encounter API limits, consider reducing the number of cryptocurrencies or adding delays between requests.
+  * If API limits are encountered, consider reducing the number of cryptocurrencies or adding brief pauses between requests.
 
 ---
 
-## 📊 Visualization and Interpretation
+## 📊 Visualizations and Interpretation
 
-The script generates intuitive visual plots:
+The script generates intuitive and detailed visualizations clearly comparing:
 
-* **Solid lines**: Price Indices (Monthly Rebalancing)
-* **Dashed lines**: Total Return Indices (No Rebalancing)
+* **Solid Lines**: Daily-Weighted Price Indices (Daily Market-Cap Rebalancing)
+* **Dashed Lines**: Total Return Indices (Buy-and-Hold, No Rebalancing)
 
-These visualizations help illustrate the performance differences between active rebalancing strategies and passive investment approaches.
+Each plot is clearly annotated with the latest available index value and date, helping you easily track recent market performance.
 
 ---
 
 ## ⏱ Performance & Execution Time
 
-The script measures and displays its total execution time upon completion, typically ranging from **1–3 minutes**.
+The script reports the total execution time after completion, typically ranging between **1–3 minutes**:
 
 Example:
 
 ```
-Total Execution Time: 57.73 seconds
+Total Execution Time: 56.09 seconds
 ```
 
 ---
 
 ## 📜 License
 
-This project is distributed under the **MIT License**. You are free to modify, distribute, and reuse the code with proper attribution.
+This project is licensed under the **MIT License**, allowing you to freely modify, distribute, and reuse the code with proper attribution.
 
 ---
 
-**Happy analyzing and investing!** 📊🚀
+**Happy analyzing and investing!** 🚀📊
