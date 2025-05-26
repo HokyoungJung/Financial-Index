@@ -148,10 +148,4 @@ This project is distributed under the **MIT License**. You are free to modify, d
 
 ---
 
-## 🙌 Contributions
-
-Improvements and contributions are welcome! Feel free to open issues or submit pull requests directly through GitHub.
-
----
-
 **Happy analyzing and investing!** 📊🚀
