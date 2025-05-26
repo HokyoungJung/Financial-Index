@@ -1,4 +1,4 @@
-# 📈 Market-Cap Weighted Indices
+# 📈 Market-Cap-Weighted Indices (Stocks, Crypto, Commodities)
 
 This project provides an automated calculation and visualization of market-cap-weighted indices and total return indices for three asset classes:
 
