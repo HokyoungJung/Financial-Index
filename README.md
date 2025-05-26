@@ -52,6 +52,19 @@ Upon execution, the script will:
 
 ---
 
+## 📊 Example Plots
+
+### NASDAQ-100 Indices (Daily Market-Cap Weighted vs. Total Return)
+![NASDAQ-100 Indices](examples/nasdaq-100_index_comparison.png)
+
+### Top 20 Cryptocurrencies Indices (Daily Market-Cap Weighted vs. Total Return)
+![Cryptocurrencies Indices](examples/top_20_cryptocurrencies_index_comparison.png)
+
+### Top 10 Commodities Indices (Equal-Weighted vs. Total Return)
+![Commodities Indices](examples/top_10_commodities_index_comparison.png)
+
+---
+
 ## ⚙️ How the Script Works
 
 ### ✅ **Automatic Asset Pool Selection**
